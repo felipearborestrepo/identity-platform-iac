@@ -1,0 +1,29 @@
+company: NovaLab
+
+departments:
+  - Finance
+  - HR
+  - IT
+  - Security
+
+users:
+  alex.rivera:
+    display_name: Alex Rivera 
+    department: Finance
+    job_title: Financial Analyst
+
+  sam.chen:
+    display_name: Sam Chen 
+    department: IT
+    job_title: IAM Engineer
+
+  jordan.lee:
+    display_name: Jordan Lee
+    department: IT
+    job_title: Senior Systems Administrator
+  
+  taylor.morgan:
+    display_name: Taylor Morgan
+    department: IT
+    job_title: Operations Security Analyst
+    enabled: false
