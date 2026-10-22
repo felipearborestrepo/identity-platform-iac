@@ -29,6 +29,6 @@ users:
     enabled: false
 
   riley.kim:
-  display_name: Riley Kim 
-  department: HR
-  job_title: HR Coordinator
+    display_name: Riley Kim 
+    department: HR
+    job_title: HR Coordinator
