@@ -13,7 +13,7 @@ terraform {
     organization = "felipe-iam-lab"
 
     workspaces {
-        name = "novalab-okta"
+      name = "novalab-okta"
     }
   }
 }
