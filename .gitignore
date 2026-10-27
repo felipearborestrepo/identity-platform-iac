@@ -1,0 +1,15 @@
+# Terraform state: contains passwords and IDs
+*.tfstate
+*.tfstate.*
+
+# Downloaded providers
+*/.terraform/*
+
+# Variable files, which often hold secret
+*.tfvars
+
+# Local secret files
+.env
+
+# macOS Finder files
+.DS_Store
