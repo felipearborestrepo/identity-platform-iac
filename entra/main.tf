@@ -29,4 +29,30 @@ resource "azuread_user" "user" {
   account_enabled       = try(each.value.enabled, true)
 }
 
+resource "azuread_group" "department" {
+  for_each = toset(local.config.departments)
+
+  display_name     = "SG-${each.key}"
+  description      = "${each.key} department (managed by Terraform)"
+  security_enabled = true
+}
+
+resource "azuread_group_member" "department" {
+  for_each = local.users
+
+  group_object_id  = azuread_group.department[each.value.department].object_id
+  member_object_id = azuread_user.user[each.key].object_id
+}
+
+resource "azuread_group" "synced_users" {
+  display_name     = "${local.config.company} Synced Users"
+  description      = "All enabled ${local.config.company} users (dynamic)"
+  security_enabled = true
+  types            = ["DynamicMembership"]
+
+  dynamic_membership {
+    enabled = true
+    rule = "(user.companyName -eq \"${local.config.company}\") and (user.accountEnabled -eq true)"
+  }
+}
 
