@@ -52,7 +52,7 @@ resource "azuread_group" "synced_users" {
 
   dynamic_membership {
     enabled = true
-    rule = "(user.companyName -eq \"${local.config.company}\") and (user.accountEnabled -eq true)"
+    rule    = "(user.companyName -eq \"${local.config.company}\") and (user.accountEnabled -eq true)"
   }
 }
 
