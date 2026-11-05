@@ -9,6 +9,14 @@ terraform {
       version = "~> 3.6"
     }
   }
+
+  cloud {
+    organization = "felipe-iam-lab"
+
+    workspaces {
+        name = "novalab-entra"
+    }
+  }
 }
 
 provider "azuread" {}
