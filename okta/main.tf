@@ -37,10 +37,54 @@ resource "okta_user" "user" {
 
 resource "okta_group_rule" "department" {
   for_each = toset(local.config.departments)
-
   name              = "NL-${each.key}-rule"
   status            = "ACTIVE"
   expression_type   = "urn:okta:expression:1.0"
   expression_value  = "user.department==\"${each.key}\""
   group_assignments = [okta_group.department[each.key].id]
+}
+
+resource "okta_network_zone" "blocked" {
+  name     = "NL-Blocked-Networks"
+  type     = "IP"
+  usage    = "POLICY"
+  status   = "ACTIVE"
+  gateways = var.blocked_ip_ranges
+}
+
+resource "okta_app_signon_policy" "it_portal" {
+    name = "NL-IT-Portal-Policy"
+    description = "Access rules for the NovaLab IT Portal (managed by Terraform)"
+}
+
+resource "okta_app_signon_policy_rule" "deny_blocked" {
+    policy_id = okta_app_signon_policy.it_portal.id
+    name = "Deny blocked networks"
+    priority = 1
+    access = "DENY"
+    network_connection = "ZONE"
+    network_includes = [okta_network_zone.blocked.id]
+}
+
+resource "okta_app_signon_policy_rule" "it_mfa" {
+  policy_id                  = okta_app_signon_policy.it_portal.id
+  name                       = "IT requires MFA"
+  priority                   = 2
+  access                     = "ALLOW"
+  factor_mode                = "2FA"
+  groups_included             = [okta_group.department["IT"].id]
+  re_authentication_frequency = "PT2H"
+
+  depends_on = [okta_app_signon_policy_rule.deny_blocked]
+}
+
+resource "okta_app_bookmark" "it_portal" {
+  label                 = "NovaLab IT Portal"
+  url                   = "https://example.com/it-portal"
+  authentication_policy = okta_app_signon_policy.it_portal.id
+}
+
+resource "okta_app_group_assignment" "it_portal" {
+  app_id   = okta_app_bookmark.it_portal.id
+  group_id = okta_group.department["IT"].id
 }
