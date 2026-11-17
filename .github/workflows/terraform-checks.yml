@@ -12,29 +12,29 @@ jobs:
   check:
     runs-on: ubuntu-latest
 
-  strategy:
+    strategy:
     fail-fast: false
     matrix:
       folder: [entra, okta]
 
-  defaults:
+    defaults:
     run:
       working-directory: ${{ matrix.folder}}
 
-  steps:
-    - name: Get the code
-      uses: actions/checkout@v4
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
 
-    - name: Install Terraform
-      uses: hashicorp/setup-terraform@v3
-      with:
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
         terraform_version: 1.16.5
 
-    - name: Check formatting
-      run: terraform fmt -check -diff
+      - name: Check formatting
+        run: terraform fmt -check -diff
 
-    - name: Initialize Terraform
-      run: terraform init -backend=false
+      - name: Initialize Terraform
+        run: terraform init -backend=false
 
-    - name: Check the code is valid
-      run: terraform validate
+      - name: Check the code is valid
+        run: terraform validate
