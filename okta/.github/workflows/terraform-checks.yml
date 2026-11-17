@@ -1,0 +1,40 @@
+name: terraform-checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    strategy:
+    fail-fast: false
+    matrix:
+      folder: [entra, okta]
+
+    defaults:
+      run:
+        working-directory: ${{ matrix.folder}}
+
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Install Terraform
+        uses: hashicopr/setup-terraform@v3
+        with:
+          terraform_version: 1.16.5
+
+      - name: Check formatting
+        run: terraform fmt -check -diff
+
+      - name: Itialize Terraform
+        run: terraform init -backend=false
+
+      - name: Check the code is valid
+        run: terraform validate
