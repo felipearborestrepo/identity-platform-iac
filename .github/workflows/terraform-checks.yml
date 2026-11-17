@@ -12,10 +12,10 @@ jobs:
   check:
     runs-on: ubuntu-latest
 
-  strategy:
-    fail-fast: false
-    matrix:
-      folder: [entra, okta]
+    strategy:
+      fail-fast: false
+      matrix:
+        folder: [entra, okta]
 
     defaults:
       run:
