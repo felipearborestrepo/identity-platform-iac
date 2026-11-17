@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-    fail-fast: false
-    matrix:
-      folder: [entra, okta]
+      fail-fast: false
+      matrix:
+        folder: [entra, okta]
 
     defaults:
-    run:
-      working-directory: ${{ matrix.folder}}
+      run:
+        working-directory: ${{ matrix.folder}}
 
     steps:
       - name: Get the code
@@ -28,7 +28,7 @@ jobs:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-        terraform_version: 1.16.5
+          terraform_version: 1.16.5
 
       - name: Check formatting
         run: terraform fmt -check -diff
