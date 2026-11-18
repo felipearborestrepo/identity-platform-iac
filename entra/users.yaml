@@ -35,5 +35,9 @@ users:
     department: HR
     job_title: HR Specialist
 
+  casey.nguyen:
+    display_name: Casey Nguyen
+    department: Security
+    job_title: Security Analyst
   
 
