@@ -1,3 +1,5 @@
+# NovaLab employees: the source of truth for Entra ID and Okta
+
 company: NovaLab
 
 departments:
@@ -32,8 +34,6 @@ users:
     display_name: Riley Kim
     department: HR
     job_title: HR Specialist
-
-
 
   
 
