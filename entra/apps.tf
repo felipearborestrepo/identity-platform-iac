@@ -7,7 +7,7 @@ data "azuread_client_config" "current" {}
 
 resource "azuread_application" "employee_portal" {
   display_name            = "NovaLab Employee Portal"
-  owner                   = [data.azuread_client_config.current.object_id]
+  owners                  = [data.azuread_client_config.current.object_id]
   sign_in_audience        = "AzureADMyOrg"
   group_membership_claims = ["SecurityGroup"]
 
