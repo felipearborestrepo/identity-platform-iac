@@ -12,3 +12,8 @@ output "synced_group_id" {
   description = "Object ID of the dynamic NovaLab Synced Users group"
   value       = azuread_group.synced_users.object_id
 }
+
+output "employee_portal_client_id" {
+  description = "Client ID of the NovaLab Employee Portal"
+  value       = azuread_application.employee_portal.client_id
+}
